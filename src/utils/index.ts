@@ -5,9 +5,12 @@ import { EmbeddedWallet } from './Wallet';
 import idl_ from './dialect.json';
 import programs_ from './programs.json';
 import { ecdhDecrypt, ecdhEncrypt } from './ecdh-encryption';
+import * as tsIdl_ from './dialect';
 
 export const idl = idl_;
 export const programs = programs_;
+
+export const tsIdl = tsIdl_;
 
 export const display = (publicKey: PublicKey | string): string => {
   const s = publicKey.toString();

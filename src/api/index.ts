@@ -168,15 +168,17 @@ export async function createMetadata(
     program,
     user.publicKey,
   );
-  const tx = await program.rpc.createMetadata(new anchor.BN(metadataNonce), {
-    accounts: {
+  const tx = await program.methods
+    .createMetadata(new anchor.BN(metadataNonce))
+    .accounts({
       user: user.publicKey,
       metadata: metadataAddress,
       rent: anchor.web3.SYSVAR_RENT_PUBKEY,
       systemProgram: anchor.web3.SystemProgram.programId,
-    },
-    signers: 'secretKey' in user ? [user] : [],
-  });
+    })
+    .signers('secretKey' in user ? [user] : [])
+    .rpc();
+
   await waitForFinality(program, tx);
   return await getMetadata(program, user.publicKey);
 }
